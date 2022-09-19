@@ -23,10 +23,14 @@ def data_nd():
     [['period', facet, 'count']].groupby(['period', facet]).sum()
   new_index = pd.MultiIndex.from_product([tmp.index.unique(level=0), tmp.index.unique(level=1)])
   tmp = tmp.reindex(new_index) \
-    .fillna(0) \
-    .sort_values([facet, 'period']) \
+    .fillna(0)
+  periods = tmp.index.get_level_values(0).drop_duplicates()
+  tmp = tmp.sort_values([facet, 'period']) \
     .groupby(facet).agg(count=('count', pd.Series.to_list))
-  return tmp['count'].to_dict()
+  return({
+    "first_period": str(periods[0]),
+    "data": tmp['count'].to_dict(),
+  })
 
 if __name__ == '__main__':
   df = pd.read_csv('processed/table-83-borrowers.csv')
