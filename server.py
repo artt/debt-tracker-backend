@@ -4,6 +4,8 @@ import pandas as pd
 import os
 
 app = Flask(__name__)
+logger = app.logger
+logger.setLevel(20)
 cors = CORS(app)
 
 @app.route("/")
@@ -13,7 +15,8 @@ def hello_world():
 @app.route("/data/nd", methods=["POST"])
 def data_nd():
   # will replace this with data from request body
-  facet = 'age'
+  req = request.get_json()
+  facet = req['facet']
   filter_product = 0
   filter_fi = 0
   tmp = df[(df['filter_product'] == filter_product) & (df['filter_fi'] == filter_fi)] \
