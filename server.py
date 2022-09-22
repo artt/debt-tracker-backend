@@ -17,10 +17,26 @@ def data_nd():
   # will replace this with data from request body
   req = request.get_json()
   facet = req['facet']
-  filter_product = 0
-  filter_fi = 0
+
+  # filter_list = list(req['filters'].keys())
+  # print('-------------')
+  # print(filter_list)
+  # print(req['filters'])
+
+  # for i, f in enumerate(filter_list):
+  #   if (i == 0):
+  #     mask = (df[f] == req['filters'][f])
+  #     # print('xxxxxxxxxxxxxxxxxxx')
+  #     # print(req['filters'][f])
+  #   else:
+  #     mask = (mask) & (df[f] == req['filters'][f])
+  # tmp = df[mask][['period', facet, 'count']].groupby(['period', facet]).sum()
+  
+  filter_product = req['filters']['product']
+  filter_fi = req['filters']['fi']
   tmp = df[(df['filter_product'] == filter_product) & (df['filter_fi'] == filter_fi)] \
     [['period', facet, 'count']].groupby(['period', facet]).sum()
+
   new_index = pd.MultiIndex.from_product([tmp.index.unique(level=0), tmp.index.unique(level=1)])
   tmp = tmp.reindex(new_index) \
     .fillna(0)
