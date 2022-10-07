@@ -44,6 +44,7 @@ def data_nd():
   tmp = tmp.sort_values([facet, 'period']) \
     .groupby(facet).agg(count=('count', pd.Series.to_list))
   return({
+    "facet": facet,
     "first_period": str(periods[0]),
     "data": tmp['count'].to_dict(),
   })
