@@ -26,17 +26,10 @@ def data_nd():
     adjusted_f = 'filter_' + f if f in ['product', 'fi'] else f
     if (i == 0):
       mask = (df[adjusted_f].isin(req['filters'][f]))
-      # print('xxxxxxxxxxxxxxxxxxx')
-      # print(req['filters'][f])
     else:
       mask = (mask) & (df[adjusted_f].isin(req['filters'][f]))
   tmp = df[mask][['period', facet, 'count']].groupby(['period', facet]).sum()
   
-  # filter_product = req['filters']['product']
-  # filter_fi = req['filters']['fi']
-  # tmp = df[(df['filter_product'] == filter_product) & (df['filter_fi'] == filter_fi)] \
-  #   [['period', facet, 'count']].groupby(['period', facet]).sum()
-
   new_index = pd.MultiIndex.from_product([tmp.index.unique(level=0), tmp.index.unique(level=1)])
   tmp = tmp.reindex(new_index) \
     .fillna(0)
