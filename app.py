@@ -10,7 +10,7 @@ cors = CORS(app)
 
 @app.route("/")
 def hello_world():
-  return "Hello there!"
+  return "Hello!"
 
 @app.route("/data/nd", methods=["POST"])
 def data_nd():
