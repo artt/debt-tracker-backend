@@ -29,7 +29,7 @@ def data_nd():
     else:
       mask = (mask) & (df[adjusted_f].isin(req['filters'][f]))
   tmp = df[mask][['period', facet, 'count']].groupby(['period', facet]).sum()
-  
+
   new_index = pd.MultiIndex.from_product([tmp.index.unique(level=0), tmp.index.unique(level=1)])
   tmp = tmp.reindex(new_index) \
     .fillna(0)
