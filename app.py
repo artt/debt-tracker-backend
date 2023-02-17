@@ -44,4 +44,8 @@ def data_nd():
 
 if __name__ == '__main__':
   df = pd.read_pickle('processed/table-83-borrowers.pickle')
-  app.run(host='0.0.0.0', debug=True, port=int(os.environ.get('PORT', '1443')))
+  logger.info('Starting app...')
+  if os.getenv('FLASK_ENV') == 'development':
+    app.run(host='0.0.0.0', debug=True, port=int(os.environ.get('PORT', '1443')))
+  else:
+    serve(app, host='0.0.0.0', port=int(os.environ.get('PORT', '1443')))
