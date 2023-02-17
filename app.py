@@ -43,5 +43,5 @@ def data_nd():
   })
 
 if __name__ == '__main__':
-  df = pd.read_csv('processed/table-83-borrowers.csv')
+  df = pd.read_pickle('processed/table-83-borrowers.pickle')
   app.run(host='0.0.0.0', debug=True, port=int(os.environ.get('PORT', '1443')))
