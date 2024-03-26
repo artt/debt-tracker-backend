@@ -11,6 +11,11 @@
 # production
 /build
 
+
+raw/
+data-prep.ipynb
+
+
 # misc
 .DS_Store
 .env.local
